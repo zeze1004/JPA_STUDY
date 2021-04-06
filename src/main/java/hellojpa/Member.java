@@ -1,36 +1,16 @@
 package hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
-@Entity
+@Entity(name = "Member") // 디폴트로 클래스 이름을 그대로 사용
 public class Member {
-    @Id // PK
+    @Id
     private Long id;
-    private String name;
 
-    // 기본 생성자 필요
-    public Member() {
-    }
-
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    // 컬럼 매핑
+   @Column(name = "name", nullable = false)
+    private String username;
 }

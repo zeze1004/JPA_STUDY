@@ -16,17 +16,6 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            // 영속
-//            Member member = em.find(Member.class,1004L);
-//            member.setName("ZEZE IS SLEEPY");
-
-            Member member = new Member(777L, "ZEZE1004");
-            em.persist(member);
-
-            em.flush();
-
-            System.out.println("==========");
-
             // 트랜직션 커밋할 때 DB에 영속성 컨택스트 저장
             tx.commit();
         } catch (Exception e) {
