@@ -21,6 +21,17 @@ public class Member {
     @JoinColumn(name = "TEAM_ID") // Join 해야할 컬럼, TEAM의 PK를 가져옴
     private Team team;
 
+    @OneToOne
+    @JoinColumn(name = "LOCKED_ID")
+    private Locker locker;
+
+    public Locker getLocker() {
+        return locker;
+    }
+
+    public void setLocker(Locker locker) {
+        this.locker = locker;
+    }
 
     public Long getId() {
         return id;
