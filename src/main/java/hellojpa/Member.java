@@ -16,22 +16,19 @@ public class Member extends BaseEntity {
     @Column(name = "USERNAME")
     private String username;
 
-    // 하나의 팀에 여러명의 멤버가 소속 되므로 member : team은 다대일 관계
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID") // Join 해야할 컬럼, TEAM의 PK를 가져옴
-    private Team team;
+    // 근무 시간
+    @Embedded
+    private Period workPeriod;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKED_ID")
-    private Locker locker;
-
-    public Locker getLocker() {
-        return locker;
-    }
-
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
+    // 여가 시간
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "startDate",
+                column = @Column(name = "rest_start_time")),
+            @AttributeOverride(name = "endDate",
+                    column = @Column(name = "rest_end_time"))
+    })
+    private Period workPeriod;
 
     public Long getId() {
         return id;
@@ -49,12 +46,11 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
-    // 연관관계 편의 메소드
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
+
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
     }
 }
