@@ -9,11 +9,41 @@ import java.util.Date;
 
 @Entity(name = "Member") // 디폴트로 클래스 이름을 그대로 사용
 public class Member {
-    @Id
-    @GeneratedValue(strategy = )
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    // 컬럼 매핑
-   @Column(name = "name", nullable = false)
+    @Column(name = "USERNAME")
     private String username;
+
+    // 하나의 팀에 여러명의 멤버가 소속 되므로 member : team은 다대일 관계
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID") // Join 해야할 컬럼, TEAM의 PK를 가져옴
+    private Team team;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+    // 연관관계 편의 메소드
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
 }
